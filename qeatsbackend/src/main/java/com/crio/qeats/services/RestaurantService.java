@@ -9,8 +9,9 @@ package com.crio.qeats.services;
 
 import com.crio.qeats.exchanges.GetRestaurantsRequest;
 import com.crio.qeats.exchanges.GetRestaurantsResponse;
+import org.springframework.stereotype.Service;
 import java.time.LocalTime;
-
+@Service
 public interface RestaurantService {
 
   /**
@@ -24,8 +25,7 @@ public interface RestaurantService {
    * @return GetRestaurantsResponse object containing a list of open restaurants or an
    *     empty list if none fits the criteria.
    */
-  GetRestaurantsResponse findAllRestaurantsCloseBy(
-      GetRestaurantsRequest getRestaurantsRequest, LocalTime currentTime);
+  GetRestaurantsResponse findAllRestaurantsCloseBy(GetRestaurantsRequest getRestaurantsRequest, LocalTime currentTime);
 
 
 }

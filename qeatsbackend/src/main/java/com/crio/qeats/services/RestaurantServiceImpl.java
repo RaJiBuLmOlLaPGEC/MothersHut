@@ -1,7 +1,7 @@
 
 /*
  *
- *  * Copyright (c) Crio.Do 2019. All rights reserved
+ * * Copyright (c) Crio.Do 2019. All rights reserved
  *
  */
 
@@ -39,9 +39,19 @@ public class RestaurantServiceImpl implements RestaurantService {
   @Override
   public GetRestaurantsResponse findAllRestaurantsCloseBy(
       GetRestaurantsRequest getRestaurantsRequest, LocalTime currentTime) {
+    if (currentTime.isAfter(LocalTime.of(6, 59)) && currentTime.isBefore(LocalTime.of(9, 1))
+        || currentTime.isAfter(LocalTime.of(12, 59)) && currentTime.isBefore(LocalTime.of(14, 1))
+        || currentTime.isAfter(LocalTime.of(18, 59)) && currentTime.isBefore(LocalTime.of(21, 1))) {
+        return new GetRestaurantsResponse( restaurantRepositoryService.findAllRestaurantsCloseBy(
+          getRestaurantsRequest.getLatitude(), getRestaurantsRequest.getLongitude(), currentTime,
+          peakHoursServingRadiusInKms));
+    } else {
+      return new GetRestaurantsResponse( restaurantRepositoryService.findAllRestaurantsCloseBy(
+          getRestaurantsRequest.getLatitude(), getRestaurantsRequest.getLongitude(), currentTime,
+          normalHoursServingRadiusInKms));
+    }
 
-
-     return null;
+    // return null;
   }
 
 

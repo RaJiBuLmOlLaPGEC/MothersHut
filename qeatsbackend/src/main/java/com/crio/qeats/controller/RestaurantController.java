@@ -27,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 // Implement Controller using Spring annotations.
 // Remember, annotations have various "targets". They can be class level, method level or others.
 @RestController
-@Log4j2
+// @Log4j2
+@RequestMapping(RestaurantController.RESTAURANT_API_ENDPOINT)
 public class RestaurantController {
 
   public static final String RESTAURANT_API_ENDPOINT = "/qeats/v1";
@@ -45,15 +46,14 @@ public class RestaurantController {
 
 
   @GetMapping(RESTAURANTS_API)
-  public ResponseEntity<GetRestaurantsResponse> getRestaurants(
-       GetRestaurantsRequest getRestaurantsRequest) {
-    log.info("getRestaurants called with {}", getRestaurantsRequest);
+  public ResponseEntity<GetRestaurantsResponse> getRestaurants(@Valid GetRestaurantsRequest getRestaurantsRequest) {
+    // log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
 
       // CHECKSTYLE:OFF
       getRestaurantsResponse = restaurantService
           .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
-     log.info("getRestaurants returned {}", getRestaurantsResponse);
+    //  log.info("getRestaurants returned {}", getRestaurantsResponse);
       // CHECKSTYLE:ON
 
     return ResponseEntity.ok().body(getRestaurantsResponse);
