@@ -10,7 +10,11 @@ package com.crio.qeats.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +43,12 @@ public class Restaurant {
     private String name;
     private String city;
     private String imageUrl;
+    @Min(-90)
+    @Max(90)
     private double latitude;
+    @Min(-90)
+    @Max(90)
+    
     private double longitude;
     private String opensAt;
     private String closesAt;
