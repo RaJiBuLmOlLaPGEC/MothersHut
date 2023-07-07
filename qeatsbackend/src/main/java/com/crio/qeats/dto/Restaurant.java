@@ -52,5 +52,82 @@ public class Restaurant {
     private String opensAt;
     private String closesAt;
     private List<String> attributes;
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    public double getLatitude() {
+        return latitude;
+    }
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+    public double getLongitude() {
+        return longitude;
+    }
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+    public String getOpensAt() {
+        return opensAt;
+    }
+    public void setOpensAt(String opensAt) {
+        this.opensAt = opensAt;
+    }
+    public String getClosesAt() {
+        return closesAt;
+    }
+    public void setClosesAt(String closesAt) {
+        this.closesAt = closesAt;
+    }
+    public List<String> getAttributes() {
+        return attributes;
+    }
+    public void setAttributes(List<String> attributes) {
+        this.attributes = attributes;
+    }
+    public Restaurant(String id, String restaurantId, String name, String city, String imageUrl,
+            double latitude, double longitude, String opensAt, String closesAt,
+            List<String> attributes) {
+        this.id = id;
+        this.restaurantId = restaurantId;
+        this.name = name;
+        this.city = city;
+        this.imageUrl = imageUrl;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.opensAt = opensAt;
+        this.closesAt = closesAt;
+        this.attributes = attributes;
+    }
+    public Restaurant() {}
+    
+
 }
 

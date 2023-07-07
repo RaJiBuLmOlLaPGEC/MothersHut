@@ -40,5 +40,31 @@ public class GetRestaurantsRequest {
         this.latitude=d;
         this.longitude=e;
     }
+    public Double getLatitude() {
+        return latitude;
+    }
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+    public Double getLongitude() {
+        return longitude;
+    }
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+    public String getSearchFor() {
+        return searchFor;
+    }
+    public void setSearchFor(String searchFor) {
+        this.searchFor = searchFor;
+    }
+    public GetRestaurantsRequest(@NotNull @Max(90) @Min(-90) Double latitude,
+            @NotNull @Max(90) @Min(-90) Double longitude, String searchFor) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.searchFor = searchFor;
+    }
+    public GetRestaurantsRequest() {}
+    
 }
 
