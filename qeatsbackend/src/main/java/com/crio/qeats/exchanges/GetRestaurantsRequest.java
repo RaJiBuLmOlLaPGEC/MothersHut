@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 //  For instance, if a REST client calls API
 //  /qeats/v1/restaurants?latitude=28.4900591&longitude=77.536386&searchFor=tamil,
 //  this class should be able to deserialize lat/long and optional searchFor from that.
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+// @Data
+// @NoArgsConstructor
+// @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GetRestaurantsRequest {
     @NotNull
@@ -65,6 +65,7 @@ public class GetRestaurantsRequest {
         this.searchFor = searchFor;
     }
     public GetRestaurantsRequest() {}
+    
     
 }
 

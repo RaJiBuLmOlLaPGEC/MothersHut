@@ -47,8 +47,8 @@ import lombok.NoArgsConstructor;
 //      ]
 //    }
 //  ]
-@Data
-@AllArgsConstructor
+// @Data
+// @AllArgsConstructor
 public class GetRestaurantsResponse {
     private List<Restaurant>ls;
     public GetRestaurantsResponse(List<Restaurant> findAllRestaurantsCloseBy) {
@@ -56,6 +56,13 @@ public class GetRestaurantsResponse {
     }
     public List<Restaurant> getRestaurants() {
         return ls;
+    }
+    public GetRestaurantsResponse() {}
+    public List<Restaurant> getLs() {
+        return ls;
+    }
+    public void setLs(List<Restaurant> ls) {
+        this.ls = ls;
     }
 
 }
