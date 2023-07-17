@@ -47,13 +47,13 @@ public class RestaurantController {
 
   @GetMapping(RESTAURANTS_API)
   public ResponseEntity<GetRestaurantsResponse> getRestaurants(@Valid GetRestaurantsRequest getRestaurantsRequest) {
-    // log.info("getRestaurants called with {}", getRestaurantsRequest);
+    log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
 
       // CHECKSTYLE:OFF
       getRestaurantsResponse = restaurantService
           .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
-    //  log.info("getRestaurants returned {}", getRestaurantsResponse);
+     log.info("getRestaurants returned {}", getRestaurantsResponse);
       // CHECKSTYLE:ON
 
     return ResponseEntity.ok().body(getRestaurantsResponse);
