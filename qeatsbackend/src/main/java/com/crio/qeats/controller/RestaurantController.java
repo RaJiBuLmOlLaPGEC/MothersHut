@@ -58,7 +58,7 @@ public class RestaurantController {
           .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
           List<Restaurant> allRestautants=getRestaurantsResponse.getRestaurants();
           for(Restaurant r:allRestautants){
-            r.setName(r.getName().replace('é', 'e'));
+            r.setName(r.getName().replace("é", "e"));
           }
           getRestaurantsResponse.setLs(allRestautants);
      log.info("getRestaurants returned {}", getRestaurantsResponse);
