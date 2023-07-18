@@ -32,8 +32,8 @@ public class GetRestaurantsRequest {
     @Min(-90)
     private Double latitude;
     @NotNull
-    @Max(90)
-    @Min(-90)
+    @Max(180)
+    @Min(-180)
     private Double longitude;
     private String searchFor;
     public GetRestaurantsRequest(double d, double e) {
@@ -58,8 +58,7 @@ public class GetRestaurantsRequest {
     public void setSearchFor(String searchFor) {
         this.searchFor = searchFor;
     }
-    public GetRestaurantsRequest(@NotNull @Max(90) @Min(-90) Double latitude,
-            @NotNull @Max(90) @Min(-90) Double longitude, String searchFor) {
+    public GetRestaurantsRequest(Double latitude, Double longitude, String searchFor) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.searchFor = searchFor;

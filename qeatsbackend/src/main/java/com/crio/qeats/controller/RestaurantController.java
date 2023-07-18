@@ -6,10 +6,13 @@
 
 package com.crio.qeats.controller;
 
+import com.crio.qeats.dto.Restaurant;
 import com.crio.qeats.exchanges.GetRestaurantsRequest;
 import com.crio.qeats.exchanges.GetRestaurantsResponse;
 import com.crio.qeats.services.RestaurantService;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +49,20 @@ public class RestaurantController {
 
 
   @GetMapping(RESTAURANTS_API)
-  public ResponseEntity<GetRestaurantsResponse> getRestaurants(@Valid GetRestaurantsRequest getRestaurantsRequest) {
+  public ResponseEntity<GetRestaurantsResponse> getRestaurants(@Valid @RequestBody GetRestaurantsRequest getRestaurantsRequest) {
     log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
 
       // CHECKSTYLE:OFF
       getRestaurantsResponse = restaurantService
           .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
+          List<Restaurant> allRestautants=getRestaurantsResponse.getRestaurants();
+          List<Restaurant> modifiedRestaurants=new ArrayList<>();
+          for(Restaurant r:allRestautants){
+            r.setName(r.getName().replace('é', 'e'));
+            modifiedRestaurants.add(r);
+          }
+          getRestaurantsResponse.setLs(modifiedRestaurants);
      log.info("getRestaurants returned {}", getRestaurantsResponse);
       // CHECKSTYLE:ON
 
