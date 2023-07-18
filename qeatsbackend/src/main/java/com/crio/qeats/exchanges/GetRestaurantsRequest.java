@@ -27,11 +27,11 @@ import lombok.RequiredArgsConstructor;
 // @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GetRestaurantsRequest {
-    // @NotNull
+    @NotNull
     @Max(90)
     @Min(-90)
     private Double latitude;
-    // @NotNull
+    @NotNull
     @Max(180)
     @Min(-180)
     private Double longitude;
