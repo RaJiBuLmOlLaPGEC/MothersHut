@@ -49,21 +49,23 @@ public class RestaurantController {
 
 
   @GetMapping(RESTAURANTS_API)
-  public ResponseEntity<GetRestaurantsResponse> getRestaurants(@Valid @RequestBody GetRestaurantsRequest getRestaurantsRequest) {
-    log.info("getRestaurants called with {}", getRestaurantsRequest);
+  public ResponseEntity<GetRestaurantsResponse> getRestaurants(@Valid  GetRestaurantsRequest getRestaurantsRequest) {
+    // log.info("getRestaurants called with {}", getRestaurantsRequest);
     GetRestaurantsResponse getRestaurantsResponse;
 
+    if(getRestaurantsRequest.hashCode()==0){
+      return ResponseEntity.ok().body(null);
+    }
       // CHECKSTYLE:OFF
-      getRestaurantsResponse = restaurantService
-          .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
-          List<Restaurant> allRestautants=getRestaurantsResponse.getRestaurants();
-          for(Restaurant r:allRestautants){
-            r.setName(r.getName().replace("é", "e"));
-          }
-          getRestaurantsResponse.setLs(allRestautants);
-     log.info("getRestaurants returned {}", getRestaurantsResponse);
+    getRestaurantsResponse = restaurantService.findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
+    // log.info("getRestaurants returned {}", getRestaurantsResponse);
       // CHECKSTYLE:ON
-
+    List<Restaurant> restaurants = getRestaurantsResponse.getRestaurants();
+    for (Restaurant r : restaurants) {
+      String s = r.getName().replaceAll("[Â©éí]", "e");
+      r.setName(s);
+    }
+    getRestaurantsResponse.setRestaurants(restaurants);
     return ResponseEntity.ok().body(getRestaurantsResponse);
   }
 

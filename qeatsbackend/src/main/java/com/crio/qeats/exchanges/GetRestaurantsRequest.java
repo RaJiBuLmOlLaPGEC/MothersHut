@@ -63,7 +63,16 @@ public class GetRestaurantsRequest {
         this.longitude = longitude;
         this.searchFor = searchFor;
     }
+    // @Override
+    // public int hashCode() {
+    //     int result = 0;
+    //     result = result + ((latitude == null) ? 0 : latitude.hashCode());
+    //     result = result + ((longitude == null) ? 0 : longitude.hashCode());
+    //     result = result + ((searchFor == null) ? 0 : searchFor.hashCode());
+    //     return result;
+    // }
     public GetRestaurantsRequest() {}
+   
     
     
 }
