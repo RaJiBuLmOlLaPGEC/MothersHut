@@ -54,7 +54,7 @@ public class RestaurantController {
     GetRestaurantsResponse getRestaurantsResponse;
 
     if(getRestaurantsRequest.hashCode()==0){
-      return ResponseEntity.ok().body(null);
+      return ResponseEntity.badRequest().body(null);
     }
       // CHECKSTYLE:OFF
     getRestaurantsResponse = restaurantService.findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
