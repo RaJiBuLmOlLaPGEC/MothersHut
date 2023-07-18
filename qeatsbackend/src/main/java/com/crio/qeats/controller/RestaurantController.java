@@ -57,12 +57,10 @@ public class RestaurantController {
       getRestaurantsResponse = restaurantService
           .findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
           List<Restaurant> allRestautants=getRestaurantsResponse.getRestaurants();
-          List<Restaurant> modifiedRestaurants=new ArrayList<>();
           for(Restaurant r:allRestautants){
             r.setName(r.getName().replace('é', 'e'));
-            modifiedRestaurants.add(r);
           }
-          getRestaurantsResponse.setLs(modifiedRestaurants);
+          getRestaurantsResponse.setLs(allRestautants);
      log.info("getRestaurants returned {}", getRestaurantsResponse);
       // CHECKSTYLE:ON
 
