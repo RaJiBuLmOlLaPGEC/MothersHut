@@ -10,6 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 // @Data
 // @NoArgsConstructor
 // @AllArgsConstructor
+@Document
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GetRestaurantsRequest {
     @NotNull
