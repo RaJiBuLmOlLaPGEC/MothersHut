@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
+import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetBackedTransactionSynchronization;
@@ -51,26 +52,54 @@ public class RestaurantController {
 
 
 
-  @GetMapping(RESTAURANTS_API)
-  public ResponseEntity<GetRestaurantsResponse> getRestaurants(@Valid GetRestaurantsRequest getRestaurantsRequest) {
-    // log.info("getRestaurants called with {}", getRestaurantsRequest);
-    GetRestaurantsResponse getRestaurantsResponse;
+  // @GetMapping(RESTAURANTS_API)
+  // public ResponseEntity<GetRestaurantsResponse> getRestaurants(@Valid GetRestaurantsRequest getRestaurantsRequest) {
+  //   // log.info("getRestaurants called with {}", getRestaurantsRequest);
+  //   GetRestaurantsResponse getRestaurantsResponse;
 
-    if(getRestaurantsRequest.hashCode()==0){
-      return ResponseEntity.badRequest().body(null);
-    }
-      // CHECKSTYLE:OFF
-    getRestaurantsResponse = restaurantService.findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
-    // log.info("getRestaurants returned {}", getRestaurantsResponse);
-      // CHECKSTYLE:ON
-    List<Restaurant> restaurants = getRestaurantsResponse.getRestaurants();
-    for (Restaurant r : restaurants) {
-      String s = r.getName().replaceAll("[Â©éí]", "e");
-      r.setName(s);
-    }
-    getRestaurantsResponse.setRestaurants(restaurants);
-    return ResponseEntity.ok().body(getRestaurantsResponse);
-  }
+  //   if(getRestaurantsRequest.hashCode()==0){
+  //     return ResponseEntity.badRequest().body(null);
+  //   }
+  //     // CHECKSTYLE:OFF
+  //   getRestaurantsResponse = restaurantService.findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
+  //   // log.info("getRestaurants returned {}", getRestaurantsResponse);
+  //     // CHECKSTYLE:ON
+  //   List<Restaurant> restaurants = getRestaurantsResponse.getRestaurants();
+  //   for (Restaurant r : restaurants) {
+  //     String s = r.getName().replaceAll("[Â©éí]", "e");
+  //     r.setName(s);
+  //   }
+  //   getRestaurantsResponse.setRestaurants(restaurants);
+  //   return ResponseEntity.ok().body(getRestaurantsResponse);
+  // }
+@GetMapping(RESTAURANTS_API)
+public ResponseEntity<GetRestaurantsResponse>
+getRestaurants(GetRestaurantsRequest getRestaurantsRequest) {
+log.info("getRestaurants called with {}", getRestaurantsRequest); GetRestaurantsResponse getRestaurantsResponse;
+if (getRestaurantsRequest.getLatitude() != null &&
+getRestaurantsRequest.getLongitude() != null
+&& getRestaurantsRequest.getLatitude() >= -90 &&
+getRestaurantsRequest.getLatitude() <= 90
+&& getRestaurantsRequest.getLongitude() >= -180 &&
+getRestaurantsRequest.getLongitude() <= 180) {
+List<Restaurant> restaurants;
+if (!StringUtils.isEmpty(getRestaurantsRequest.getSearchFor())) {
+getRestaurantsResponse =
+restaurantService.findRestaurantsBySearchQuery(getRestaurantsRequest, LocalTime.now());
+log.info("getRestaurants returned {}", getRestaurantsResponse); restaurants = getRestaurantsResponse.getRestaurants();
+} else {
+getRestaurantsResponse =
+restaurantService.findAllRestaurantsCloseBy(getRestaurantsRequest, LocalTime.now());
+restaurants = getRestaurantsResponse.getRestaurants();
+}
+for (int i = 0; i < restaurants.size(); i++) {
+restaurants.get(i).setName(restaurants.get(i).getName().replace("é", "?"));
+}
+log.info("getRestaurants returned {}", getRestaurantsResponse); return ResponseEntity.ok().body(getRestaurantsResponse);
+} else {
+return ResponseEntity.badRequest().body(null);
+}
+}
 
   // TIP(MODULE_MENUAPI): Model Implementation for getting menu given a restaurantId.
   // Get the Menu for the given restaurantId

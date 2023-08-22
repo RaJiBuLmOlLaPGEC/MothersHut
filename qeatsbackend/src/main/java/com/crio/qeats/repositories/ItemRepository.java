@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemRepository extends MongoRepository<ItemEntity, String> {
+    @Query("{'name': {$regex: '^?0$', $options: 'i'}}")
+Optional<List<ItemEntity>> findItemsByNameExact(String itemName);
+@Query("{'name': {$regex: '.*?0.*', $options: 'i'}}")
+Optional<List<ItemEntity>> findItemsByNameInexact(String itemRegex);
 
 }
 
