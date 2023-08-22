@@ -39,7 +39,7 @@ else
     git pull
 fi
 
-if systemctl status mongod | grep active > /dev/null; then
+if systemctl status mongodb | grep active > /dev/null; then
     echo "MongoDB is running..."
 else
     echo "MongoDB not running; Exiting"
