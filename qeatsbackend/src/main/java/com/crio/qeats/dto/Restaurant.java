@@ -37,8 +37,8 @@ import lombok.NoArgsConstructor;
 //    "South Indian"
 //  ]
 // }
-// @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
+// @JsonIgnoreProperties(ignoreUnknown = true)
 public class Restaurant {
 
     @JsonIgnore

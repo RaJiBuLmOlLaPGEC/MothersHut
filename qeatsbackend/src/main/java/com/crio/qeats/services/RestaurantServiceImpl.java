@@ -11,6 +11,7 @@ import com.crio.qeats.dto.Restaurant;
 import com.crio.qeats.exchanges.GetRestaurantsRequest;
 import com.crio.qeats.exchanges.GetRestaurantsResponse;
 import com.crio.qeats.repositoryservices.RestaurantRepositoryService;
+import com.crio.qeats.repositoryservices.RestaurantRepositoryServiceImpl;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,39 +67,40 @@ public class RestaurantServiceImpl implements RestaurantService {
   // Remember, a restaurant must be present only once in the resulting list.
   // Check RestaurantService.java file for the interface contract.
   @Override
-  public GetRestaurantsResponse findRestaurantsBySearchQuery(
-      GetRestaurantsRequest getRestaurantsRequest, LocalTime currentTime) {
+  public GetRestaurantsResponse findRestaurantsBySearchQuery(GetRestaurantsRequest getRestaurantsRequest, LocalTime currentTime) {
 
-        Double servingRadiusInKms = isPeakHour(currentTime) ?
-        peakHoursServingRadiusInKms : normalHoursServingRadiusInKms;
-        String searchFor = getRestaurantsRequest.getSearchFor(); List<List<Restaurant>> listOfRestaurantLists = new ArrayList<>();
-        if (!searchFor.isEmpty()) {
+        Double servingRadiusInKms = isPeakHour(currentTime) ? peakHoursServingRadiusInKms : normalHoursServingRadiusInKms;
+        String searchFor = getRestaurantsRequest.getSearchFor(); 
+        List<List<Restaurant>> listOfRestaurantLists = new ArrayList<>();
+        List<Restaurant> restaurantList=new ArrayList<>();
+       if(!getRestaurantsRequest.getSearchFor().equals("")){
+
+        
         listOfRestaurantLists.add(restaurantRepositoryService.findRestaurantsByName(getRestaurantsRequest.getLatitude(),
         getRestaurantsRequest.getLongitude(), searchFor, currentTime, servingRadiusInKms));
-        listOfRestaurantLists
-        .add(restaurantRepositoryService.findRestaurantsByAttributes(getRestaurantsRequest.getLatitude(),
+        listOfRestaurantLists.add(restaurantRepositoryService.findRestaurantsByAttributes(getRestaurantsRequest.getLatitude(),
         getRestaurantsRequest.getLongitude(), searchFor,
         currentTime, servingRadiusInKms));
-        listOfRestaurantLists
-        .add(restaurantRepositoryService.findRestaurantsByItemName(getRestaurantsRequest.getLatitude(),
+        listOfRestaurantLists.add(restaurantRepositoryService.findRestaurantsByItemName(getRestaurantsRequest.getLatitude(),
         getRestaurantsRequest.getLongitude(), searchFor,
         currentTime, servingRadiusInKms));
-        listOfRestaurantLists
-        .add(restaurantRepositoryService.findRestaurantsByItemAttributes(getRestaurantsRequest.getLatitude(),
+        listOfRestaurantLists.add(restaurantRepositoryService.findRestaurantsByItemAttributes(getRestaurantsRequest.getLatitude(),
         getRestaurantsRequest.getLongitude(), searchFor,
         currentTime, servingRadiusInKms));
         Set<String> restaurantSet = new HashSet<>();
-        List<Restaurant> restaurantList = new ArrayList<>();
-        for (List<Restaurant> restoList : listOfRestaurantLists) { for (Restaurant restaurant : restoList) {
-        if (!restaurantSet.contains(restaurant.getRestaurantId())) { restaurantList.add(restaurant);
-        restaurantSet.add(restaurant.getRestaurantId());
-        }
-        }
+        
+        for (List<Restaurant> restoList : listOfRestaurantLists) { 
+          for (Restaurant restaurant : restoList) {
+            if (!restaurantSet.contains(restaurant.getRestaurantId())) { 
+              restaurantList.add(restaurant);
+              restaurantSet.add(restaurant.getRestaurantId());
+            }
+          }
         }
         return new GetRestaurantsResponse(restaurantList);
-        } else {
-        return new GetRestaurantsResponse(new ArrayList<>());
-        }
+      }else{
+        return new GetRestaurantsResponse(restaurantList);
+      } 
 
   }
   private boolean isTimeWithInRange(LocalTime timeNow,

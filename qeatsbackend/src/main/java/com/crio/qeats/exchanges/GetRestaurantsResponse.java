@@ -47,7 +47,7 @@ import lombok.NoArgsConstructor;
 //      ]
 //    }
 //  ]
-// @Data
+@Data
 // @AllArgsConstructor
 public class GetRestaurantsResponse {
 
@@ -66,6 +66,11 @@ public class GetRestaurantsResponse {
     }
 
     public GetRestaurantsResponse() {}
+
+    @Override
+    public String toString() {
+        return "GetRestaurantsResponse [restaurants=" + restaurants + "]";
+    }
     
     
 

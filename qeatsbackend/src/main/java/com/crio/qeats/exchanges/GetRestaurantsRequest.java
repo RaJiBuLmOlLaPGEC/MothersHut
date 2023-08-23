@@ -23,10 +23,8 @@ import lombok.RequiredArgsConstructor;
 //  For instance, if a REST client calls API
 //  /qeats/v1/restaurants?latitude=28.4900591&longitude=77.536386&searchFor=tamil,
 //  this class should be able to deserialize lat/long and optional searchFor from that.
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-@Document
+@Data
+// @Document
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GetRestaurantsRequest {
     @NotNull
@@ -38,7 +36,7 @@ public class GetRestaurantsRequest {
     @Min(-180)
     private Double longitude;
     private String searchFor;
-    public GetRestaurantsRequest(double d, double e) {
+    public GetRestaurantsRequest(Double d, Double e) {
         this.latitude=d;
         this.longitude=e;
     }
@@ -65,14 +63,7 @@ public class GetRestaurantsRequest {
         this.longitude = longitude;
         this.searchFor = searchFor;
     }
-    @Override
-    public int hashCode() {
-        int result = 0;
-        result = result + ((latitude == null) ? 0 : latitude.hashCode());
-        result = result + ((longitude == null) ? 0 : longitude.hashCode());
-        result = result + ((searchFor == null) ? 0 : searchFor.hashCode());
-        return result;
-    }
+    
     public GetRestaurantsRequest() {}
    
     

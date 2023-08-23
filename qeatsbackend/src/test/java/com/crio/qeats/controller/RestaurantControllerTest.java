@@ -139,24 +139,17 @@ public class RestaurantControllerTest {
   @Test
   public void getRestaurantsBySearchStringAndLatLong() throws Exception {
     GetRestaurantsResponse sampleResponse = loadSampleResponseList();
+    // System.out.println(sampleResponse==null);
     assertNotNull(sampleResponse);
 
-    when(restaurantService
-        .findAllRestaurantsCloseBy(any(GetRestaurantsRequest.class), any(LocalTime.class)))
-        .thenReturn(sampleResponse);
+    when(restaurantService.findAllRestaurantsCloseBy(any(GetRestaurantsRequest.class), any(LocalTime.class))).thenReturn(sampleResponse);
 
-    ArgumentCaptor<GetRestaurantsRequest> argumentCaptor = ArgumentCaptor
-        .forClass(GetRestaurantsRequest.class);
+    ArgumentCaptor<GetRestaurantsRequest> argumentCaptor = ArgumentCaptor.forClass(GetRestaurantsRequest.class);
 
-    URI uri = UriComponentsBuilder
-        .fromPath(RESTAURANT_API_URI)
-        .queryParam("latitude", "20.21")
-        .queryParam("longitude", "30.31")
-        .queryParam("searchFor", "Briyani")
-        .build().toUri();
-
-    assertEquals(RESTAURANT_API_URI + "?latitude=20.21&longitude=30.31&searchFor=Briyani",
-        uri.toString());
+    URI uri = UriComponentsBuilder.fromPath(RESTAURANT_API_URI).queryParam("latitude", "20.21").queryParam("longitude", "30.31").queryParam("searchFor", "Briyani").build().toUri();
+    System.out.println("ursi is ->"+uri.toString());
+    System.out.println(RESTAURANT_API_URI + "?latitude=20.21&longitude=30.31&searchFor=Briyani");
+    assertEquals(RESTAURANT_API_URI + "?latitude=20.21&longitude=30.31&searchFor=Briyani",uri.toString());
 
     MockHttpServletResponse response = mvc.perform(
         get(uri.toString()).accept(APPLICATION_JSON_UTF8)
@@ -331,13 +324,13 @@ public class RestaurantControllerTest {
 
 
 
-  private GetRestaurantsResponse loadSampleResponseList() throws IOException {
-    String fixture =
-    FixtureHelpers.fixture(FIXTURES +
-    "/list_restaurant_response.json");
-    return objectMapper.readValue(fixture,
-    new TypeReference<GetRestaurantsResponse>() {
-    });
+    private GetRestaurantsResponse loadSampleResponseList() throws IOException {
+        String fixture =
+        FixtureHelpers.fixture(FIXTURES +
+        "/list_restaurant_response.json");
+        return objectMapper.readValue(fixture,
+        new TypeReference<GetRestaurantsResponse>() {
+        });
     }
 
     private GetRestaurantsResponse loadSampleRequest() throws IOException {
@@ -346,7 +339,7 @@ public class RestaurantControllerTest {
         "/create_restaurant_request.json");
         return objectMapper.readValue(fixture,
         GetRestaurantsResponse.class);
-        }
+    }
 
 }
 
