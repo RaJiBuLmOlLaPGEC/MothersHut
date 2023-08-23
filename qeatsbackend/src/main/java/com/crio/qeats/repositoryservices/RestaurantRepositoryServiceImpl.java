@@ -76,37 +76,6 @@ public class RestaurantRepositoryServiceImpl implements RestaurantRepositoryServ
     return time.isAfter(openingTime) && time.isBefore(closingTime);
   }
 
-  // TODO: CRIO_TASK_MODULE_NOSQL
-  // Objectives:
-  // 1. Implement findAllRestaurantsCloseby.
-  // 2. Remember to keep the precision of GeoHash in mind while using it as a key.
-  // Check RestaurantRepositoryService.java file for the interface contract.
-  /* 
-  public List<Restaurant> findAllRestaurantsCloseBy(Double latitude,
-      Double longitude, LocalTime currentTime, Double servingRadiusInKms) {
-
-    List<Restaurant> restaurants = new ArrayList<>();
-
-    try {
-      List<RestaurantEntity> allRestaurantEntity=restaurantRepository.findAll();
-      for(RestaurantEntity re:allRestaurantEntity){
-        if(isRestaurantCloseByAndOpen(re, currentTime, latitude, longitude, servingRadiusInKms)){
-          Restaurant r=modelMapperProvider.get().map(re,Restaurant.class);
-          restaurants.add(r);
-        }
-      }
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-      //CHECKSTYLE:OFF
-      //CHECKSTYLE:ON
-
-
-    return restaurants;
-  }
-  */
   public List<Restaurant> findAllRestaurantsCloseBy(Double latitude, Double longitude, LocalTime currentTime,Double servingRadiusInKms) {
     List<Restaurant> restaurants = null;
     if (redisConfiguration.isCacheAvailable()) {
@@ -264,11 +233,6 @@ Restaurant.class));
 }
 return restaurantList;
 }
-
-
-
-
-
   /**
    * Utility method to check if a restaurant is within the serving radius at a given time.
    * @return boolean True if restaurant falls within serving radius and is open, false otherwise
